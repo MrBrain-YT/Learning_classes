@@ -1,4 +1,7 @@
 """ monostate pattern """
+from typing import Any
+
+
 class Gun():
     shared_atr = {
         "Type":"M4A4",
@@ -97,7 +100,7 @@ user.class_hello()
 
 print("_____________________________________________________________")
 
-""" __str__ , __repr__ , __len__ , __abs__ ,  metods """
+""" __str__ , __repr__ , __len__ , __abs__ , __hash__ , __bool__ ,  and comparison methods """
 
 class User():
     def __init__(self, name, money) -> None:
@@ -124,25 +127,45 @@ class User():
         # This metod sterted if you call abs(instance name)
         return [abs(i) for i in self.money]
     
-    def __add__(self, val) -> float:
+    def __add__(self, __value) -> float:
         # This metod sterted if you call (instance name + float)
-        self.money[0] = float(self.money[0]) + float(val)
+        self.money[0] = float(self.money[0]) + float(__value)
         return self.money[0]
     
-    def __mul__(self, val) -> float:
+    def __mul__(self, __value) -> float:
         # This metod sterted if you call (instance name * float)
-        self.money[0] = float(self.money[0]) * float(val)
+        self.money[0] = float(self.money[0]) * float(__value)
         return self.money[0]
     
-    def __sub__(self, val) -> float:
+    def __sub__(self, __value) -> float:
         # This metod sterted if you call (instance name - float)
-        self.money[0] = float(self.money[0]) - float(val)
+        self.money[0] = float(self.money[0]) - float(__value)
         return self.money[0]
     
-    def __truediv__(self, val) -> float:
+    def __truediv__(self, __value) -> float:
         # This metod sterted if you call (instance name / float)
-        self.money[0] = float(self.money[0]) - float(val)
+        self.money[0] = float(self.money[0]) / float(__value)
         return self.money[0]
+    
+    """ comparison methods 
+        != - __ne__
+        == - __eq__
+        <= - __le__
+        >= - __ge__
+        < - __lt__
+        > - __gt__ """
+    def __eq__(self, __value: object) -> bool:
+        return self.name == __value
+    
+    def __hash__(self) -> int:
+        return hash(self.name)
+    
+    def __bool__(self) -> bool:
+        return bool(self.name)
+    
+    @classmethod
+    def __call__(cls, *args: Any, **kwds: Any) -> Any:
+        return cls
     
 user = User("Lavrenty", [-10000,500])
 print(user)
@@ -152,3 +175,7 @@ print(user + 7)
 print(user * 7)
 print(user - 7)
 print(user / 7)
+print(user == "vasia")
+print(hash(user))
+print(bool(user))
+print(user())
