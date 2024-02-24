@@ -17,7 +17,7 @@ b.Type = "hello"
 print(a.__dict__)
 
 
-print("_____________________________________________________________")
+print("_" * 60)
 
 """ public privat and guarded metods """
 
@@ -37,7 +37,7 @@ account1.show_data()
 # account1.__money | This class attribute privat
 # print(account1._Account__name) | This variant get privat class attribute
 
-print("_____________________________________________________________")
+print("_" * 60)
 
 """ Property, set and get method """
 
@@ -69,7 +69,7 @@ account2.balance = 40
 print(account2.balance)
 # del account2.balance | This method delete money
 
-print("_____________________________________________________________")
+print("_" * 60)
 
 """ classmetod and static metod """
 
@@ -98,7 +98,7 @@ Notebook("A520", 2020, 16).class_hello()
 user = Notebook("A520", 2020, 16)
 user.class_hello()
 
-print("_____________________________________________________________")
+print("_" * 60)
 
 """ __str__ , __repr__ , __len__ , __abs__ , __hash__ , __bool__ ,  and comparison methods """
 
@@ -179,3 +179,237 @@ print(user == "vasia")
 print(hash(user))
 print(bool(user))
 print(user())
+
+
+print("_" * 60)
+
+#  __bool__
+
+class Point_obj():
+    
+    def __init__(self, x:float, y:float) -> None:
+        self.x = x
+        self.y = y
+        self.__alive = True
+    
+    def __bool__(self) -> bool:
+        return self.__alive
+    
+    def delete(self) -> None:
+        self.__alive = False
+    
+    
+point = Point_obj(10, 10)
+print(bool(point))
+point.delete()
+print(bool(point))
+
+print("_" * 60)
+
+# polimorphism
+
+class square():
+    
+    def __init__(self, x:float) -> None:
+        self.x = x
+        
+    def get_area(self) -> float:
+        return self.x**2
+        
+        
+class rectangle():
+    
+    def __init__(self, x:float, y:float) -> None:
+        self.x = x
+        self.y = y
+        
+    def get_area(self) -> float:
+        return self.x*self.y
+    
+sq = square(2)
+rect = rectangle(2,5)
+
+for figure in [sq, rect]:
+    print(figure.get_area())
+    
+    
+print("_" * 60)
+
+# __getitem__ , __setitem__ , __delitem__
+
+class Vector():
+    
+    def __init__(self, *args) -> None:
+        self.values = list(args)
+        
+    def __str__(self) -> Any:
+        return str(self.values)
+    
+    def __getitem__(self, index:int) -> Any:
+        return self.values[index]
+    
+    def __setitem__(self, index:int, value:int) -> None:
+        self.values[index] = value
+    
+    def __delitem__(self, index:int) -> None:
+        del self.values[index]
+    
+vector_1 = Vector(1,2,3,235)
+print(vector_1)
+print(vector_1[2])
+vector_1[2] = 24
+print(vector_1)
+del vector_1[2]
+print(vector_1)
+
+
+print("_" * 60)
+
+# __iter__ , __next__
+
+class Vector():
+    
+    def __init__(self, *args) -> None:
+        self.values = list(args)
+        self.index = -1
+        
+    def __getitem__(self, index:int) -> Any:
+        return self.values[index]
+    
+    def __len__(self) -> int:
+        return len(self.values)
+        
+    def __iter__(self):
+        # for value in self.values:
+        #     yield value
+        
+        return iter(self.values)
+    
+    def __next__(self):
+        if self.index + 1 >= len(self.values):
+            raise StopIteration
+        self.index += 1
+        return self.values[self.index]
+        
+        
+        
+vector_2 = Vector(1,23,33,35,456)
+
+for i in vector_2:
+    print(i)
+    
+print("_" * 10)
+
+for i in range(len(vector_2)):
+    print(next(vector_2))
+    
+    
+print("_" * 60)
+
+# inheritance from object
+
+class human:
+    pass
+
+print(issubclass(human, object))
+# print(dir(object))
+# print(dir(human))
+# print(dir(object) == dir(human))
+
+
+print("_" * 60)
+
+class human:
+    
+    def walk(self):
+        print("Человек идёт")
+        
+    def sleep(self):
+        print("Человек спит")
+        
+    def combination(self):
+        self.walk()
+        self.sleep()
+        
+        
+class doctor(human):
+    
+    def walk(self):
+        print("Доктор идёт")
+        
+        
+        
+hum = human()      
+doc = doctor()   
+
+doc.combination()  
+
+
+
+print("_" * 60)
+
+# delegating 
+
+class human:
+    
+    def __init__(self, name:str, surname:str) -> None:
+        self.name = name
+        self.surname = surname
+        
+    def info(self):
+        print(self.name, self.surname)
+        if hasattr(self, "age"):
+            print(self.age)
+        
+        
+class doctor(human):
+    
+    def __init__(self, name: str, surname: str, age:int) -> None:
+        self.age = age
+        super().__init__(name, surname)
+    
+    def walk(self):
+        print("Доктор идёт")
+        super().walk()
+             
+
+hum = human("Petua", "Popov")
+hum.info()
+print("-" *10)
+
+doc = doctor("Vasia", "Petrov", 23)   
+doc.info()  
+
+
+print("_" * 60)
+
+# mro
+class human:
+    
+    def __init__(self, name:str, surname:str) -> None:
+        self.name = name
+        self.surname = surname
+        
+    def info(self):
+        print(self.name, self.surname)
+        if hasattr(self, "age"):
+            print(self.age)
+        
+        
+class doctor(human):
+    
+    def __init__(self, name: str, surname: str, age:int) -> None:
+        self.age = age
+        super().__init__(name, surname)
+    
+    def walk(self):
+        print("Доктор идёт")
+        super().walk()
+        
+class SuperHuman(doctor, human):
+    
+    def __init__(self, name: str, surname: str, age: int) -> None:
+        super().__init__(name, surname, age)
+        
+print(SuperHuman.__mro__)
+

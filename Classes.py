@@ -44,3 +44,11 @@ class ElecricalTramvai(Tramvai):
 Tramvai("mechanic", 1990, 50).get_count_gas()
 ElecricalTramvai(year=2010, sit_field=60).get_count_gas()
 ElecricalTramvai(year=2016, sit_field=60).get_full_info()
+
+
+print(issubclass(ElecricalTramvai, Tramvai))
+
+print(isinstance(ElecricalTramvai, Tramvai))
+
+ElectrTramvai = ElecricalTramvai(2000, 38)
+print(isinstance(ElectrTramvai, Tramvai))
