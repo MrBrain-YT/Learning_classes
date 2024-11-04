@@ -413,3 +413,41 @@ class SuperHuman(doctor, human):
         
 print(SuperHuman.__mro__)
 
+print("_" * 60)
+
+# Slots, property
+
+class Rectangle:
+    
+    __slots__ = ("x", "y")
+
+    def __init__(self, x:float, y:float) -> None:
+        self.x = x
+        self.y = y
+    
+    @property
+    def perimeter(self) -> float:
+        return 2*(self.x + self.y)
+    
+    @property
+    def area(self) -> float:
+        return self.x*self.y
+        
+# Point.__slots__ = ("x", "y", "z")
+print(Rectangle.__slots__)
+
+print("_" * 60)
+# My excetion
+
+class MyError(Exception):
+    
+    def __init__(self, *args):
+        self.message = " ".join(map(str, args))
+    
+    def __str__(self):
+        return self.message
+
+try:
+    raise MyError("This is my custom error")
+finally:
+    print("Is error handled")
